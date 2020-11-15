@@ -2,13 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Category</h1>
-    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-        For more information about DataTables, please visit the <a target="_blank"
-            href="https://datatables.net">official DataTables documentation</a>.</p>
-
-    <!-- DataTales Example -->
+    <!-- Category -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <div class="row">
@@ -24,57 +18,66 @@
                     </a>
                 </div>
             </div>
-            
-           
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Sl.</th>
+                            <th>Category Name</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Count</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Sl.</th>
+                            <th>Category Name</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Count</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </tfoot>
                     <tbody>
+                        @php
+                        $i = 1;
+                        @endphp
+                        @foreach ($categories as $category)
                         <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
+                            <td>{{$i++}}</td>
+                            <td>{{$category->category_name}}</td>
+                            <td>{{$category->calegory_des}}</td>
+                            <td>image</td>
+                            <td>count</td>
+                            <td>{{$category->pub_status == 0 ? 'Publish' : 'Unpublish'}}</td>
+                            <td class="text-center">
+                                @if ($category->pub_status == 0)
+                                <a href="{{url('cat-unpublish', ['id'=>$category->id])}}"
+                                    class="btn btn-info btn-circle btn-sm">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                                @else
+                                <a href="{{url('cat-publish', ['id'=>$category->id])}}"
+                                    class="btn btn-warning btn-circle btn-sm">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                                @endif
+
+                                <a href="#" class="btn btn-info btn-circle btn-sm">
+                                    <i class="far fa-edit"></i>
+                                </a>
+                                <a href="#" class="btn btn-danger btn-circle btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>Garrett Winters</td>
-                            <td>Accountant</td>
-                            <td>Tokyo</td>
-                            <td>63</td>
-                            <td>2011/07/25</td>
-                            <td>$170,750</td>
-                        </tr>
-                        <tr>
-                            <td>Donna Snider</td>
-                            <td>Customer Support</td>
-                            <td>New York</td>
-                            <td>27</td>
-                            <td>2011/01/25</td>
-                            <td>$112,000</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

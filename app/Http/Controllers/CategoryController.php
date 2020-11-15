@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+
 class CategoryController extends Controller
 {
     /**
@@ -14,7 +16,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.category.category-list');
+        $categories = Category::all();
+
+        return view('admin.pages.category.category-list', ['categories'=>$categories]);
     }
 
     /**
@@ -24,7 +28,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return "test";
+        return view('admin.pages.category.category-create');
     }
 
     /**
@@ -35,8 +39,41 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $category = new Category();
+        // $category->category_name = $request->category_name;
+        // $category->calegory_des = $request->calegory_des;
+        // $category->pub_status = $request->pub_status;
+
+        // $category->save();
+
+        //Category::create($request->all());
+
+        DB::table('categories')->insert([
+            'category_name' => $request->category_name,
+            'calegory_des' => $request->calegory_des,
+            'pub_status' => $request->pub_status,
+        ]);
+
+        return redirect('category/create')->with('message', 'Category Created');
     }
+
+    //Categero Publication
+    public function unpublish($id){
+        $category = Category::find($id);
+        $category->pub_status = 1;
+        $category->save();
+
+        return redirect('category')->with('message', 'Category unpublish');
+    }
+
+    public function publish($id){
+        $category = Category::find($id);
+        $category->pub_status = 0;
+        $category->save();
+
+        return redirect('category')->with('message', 'Category unpublish');
+    }
+
 
     /**
      * Display the specified resource.

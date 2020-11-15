@@ -13,4 +13,8 @@ class HomeController extends Controller
     public function contact(){
         return view('web.pages.home.home');
     }
+
+    // public function form(Request $request){
+    //     return $request->all();
+    // }
 }
