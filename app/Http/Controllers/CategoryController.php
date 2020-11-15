@@ -16,9 +16,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        //$categories = Category::all();
+        $categories = Category::orderBy('id', 'desc')->get();
 
-        return view('admin.pages.category.category-list', ['categories'=>$categories]);
+        return view('admin.pages.category.category-list', compact('categories'));
     }
 
     /**
@@ -46,13 +47,13 @@ class CategoryController extends Controller
 
         // $category->save();
 
-        //Category::create($request->all());
+        Category::create($request->all());
 
-        DB::table('categories')->insert([
-            'category_name' => $request->category_name,
-            'calegory_des' => $request->calegory_des,
-            'pub_status' => $request->pub_status,
-        ]);
+        // DB::table('categories')->insert([
+        //     'category_name' => $request->category_name,
+        //     'calegory_des' => $request->calegory_des,
+        //     'pub_status' => $request->pub_status,
+        // ]);
 
         return redirect('category/create')->with('message', 'Category Created');
     }
@@ -83,7 +84,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        
     }
 
     /**
@@ -94,7 +95,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('admin.pages.category.category-update', compact('category'));
     }
 
     /**
@@ -106,7 +107,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $category->category_name = $request->category_name;
+        $category->calegory_des = $request->calegory_des;
+        $category->pub_status = $request->pub_status;
+
+        $category->save();
+
+        return redirect('/category');
     }
 
     /**
@@ -117,6 +124,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect('/category');
     }
 }

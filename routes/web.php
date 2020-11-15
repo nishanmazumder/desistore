@@ -25,7 +25,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     
     //Category
-    Route::resource('category', CategoryController::class);
+    Route::resource('category', CategoryController::class)->except(['show']);
     Route::get('cat-unpublish/{id}', [CategoryController::class, 'unpublish']);
     Route::get('cat-publish/{id}', [CategoryController::class, 'publish']);
 

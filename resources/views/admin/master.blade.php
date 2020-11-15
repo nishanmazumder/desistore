@@ -99,13 +99,23 @@
     <script src="{{asset('public/admin')}}/js/demo/chart-area-demo.js"></script>
     <script src="{{asset('public/admin')}}/js/demo/chart-pie-demo.js"></script>
 
-    
+
     <!-- datatables -->
     <script src="{{asset('public/admin')}}/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="{{asset('public/admin')}}/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- datatables -->
     <script src="{{asset('public/admin')}}/js/demo/datatables-demo.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#nmFormDel").submit(function () {
+                alert("Want to delete?");
+            });
+        });
+        
+
+    </script>
 
 </body>
 

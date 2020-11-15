@@ -6,6 +6,8 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <div class="row">
+                {{-- <div id="nmMessage" class="alert alert-warning" role="alert"></div> --}}
+
                 <div class="col-6">
                     <h6 class="m-0 font-weight-bold text-primary">All Caegory List</h6>
                 </div>
@@ -57,24 +59,41 @@
                             <td>count</td>
                             <td>{{$category->pub_status == 0 ? 'Publish' : 'Unpublish'}}</td>
                             <td class="text-center">
-                                @if ($category->pub_status == 0)
-                                <a href="{{url('cat-unpublish', ['id'=>$category->id])}}"
-                                    class="btn btn-info btn-circle btn-sm">
-                                    <i class="fas fa-info-circle"></i>
-                                </a>
-                                @else
-                                <a href="{{url('cat-publish', ['id'=>$category->id])}}"
-                                    class="btn btn-warning btn-circle btn-sm">
-                                    <i class="fas fa-info-circle"></i>
-                                </a>
-                                @endif
 
-                                <a href="#" class="btn btn-info btn-circle btn-sm">
-                                    <i class="far fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-danger btn-circle btn-sm">
-                                    <i class="fas fa-trash"></i>
-                                </a>
+                                <table>
+                                    <tr>
+                                        <td class="border-0 m-0 p-0">
+                                            @if ($category->pub_status == 0)
+                                            <a href="{{url('cat-unpublish', ['id'=>$category->id])}}"
+                                                class="btn btn-info btn-circle btn-sm">
+                                                <i class="fas fa-info-circle"></i>
+                                            </a>
+                                            @else
+                                            <a href="{{url('cat-publish', ['id'=>$category->id])}}"
+                                                class="btn btn-warning btn-circle btn-sm">
+                                                <i class="fas fa-info-circle"></i>
+                                            </a>
+                                            @endif
+                                        </td>
+                                        <td style="padding: 0px 3px" class="border-0 m-0">
+                                            <a href="{{url('category/'.$category->id.'/edit')}}"
+                                                class="btn btn-info btn-circle btn-sm">
+                                                <i class="far fa-edit"></i>
+                                            </a>
+                                        </td>
+                                        <td class="border-0 m-0 p-0">
+                                            <form action="{{url('category/'.$category->id.'')}}" method="post"
+                                                id="nmFormDel">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" href="" class="btn btn-danger btn-circle btn-sm">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+
                             </td>
                         </tr>
                         @endforeach
