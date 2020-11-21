@@ -14,34 +14,51 @@
                         <div class="text-left">
                             <h1 class="h4 text-gray-900 mb-4">Create Category</h1>
                             @if (Session::get('message'))
-                        <p class="text-warning">{{Session::get('message')}}. Go to <a class="text-small" href="{{url('category')}}">Category List</a></p>
+                            <p class="text-warning">{{Session::get('message')}}. Go to <a class="text-small"
+                                    href="{{url('category')}}">Category List</a></p>
                             @endif
                         </div>
-                        <form class="" method="post" action="{{ url('category') }}">
-                            @csrf
-                            <div class="form-group row">
-                                <div class="col-sm-12">
-                                    <input type="text" name="category_name" class="form-control form-control-user"
-                                        id="catName" placeholder="Category Name" value="shirt">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-12">
-                                    <input type="text" name="calegory_des" class="form-control form-control-user"
-                                        id="catName" placeholder="Category Description" value="description">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-12">
-                                    <select name="pub_status" class="form-control form-control-user" id="">
-                                        <option value="0">Publish</option>
-                                        <option value="1">Unpublish</option>
-                                    </select>
-                                </div>
-                            </div>
+                        {{-- <form class="" method="post" action="{{ url('category') }}"> --}}
+                        {!! Form::open(['url' => 'category', 'method' => 'POST', 'files'=>true]) !!}
 
-                            <button class="btn btn-primary" type="submit">Submit</button>
-                        </form>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <input type="text" name="category_name" class="form-control form-control-user"
+                                    id="catName" placeholder="Category Name" value="shirt">
+                                <small
+                                    class="text-danger">{{$errors->has('category_name')?$errors->first('category_name'):''}}</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <input type="text" value="category descrioption" name="calegory_des">
+                                {{-- <textarea class="form-control form-control-user" name="calegory_des" id="catDes"
+                                    rows="3" placeholder="Category Description"></textarea> --}}
+                                <small
+                                    class="text-danger">{{$errors->has('calegory_des')?$errors->first('calegory_des'):''}}</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <input type="file" class="form-control-file form-control-user" name="cat_img" id="catImg">
+                                <small
+                                    class="text-danger">{{$errors->has('cat_img')?$errors->first('cat_img'):''}}</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <select name="pub_status" class="form-control form-control-user" id="pubStatus">
+                                    <option value="0">Publish</option>
+                                    <option value="1">Unpublish</option>
+                                </select>
+                                <small
+                                    class="text-danger">{{$errors->has('pub_status')?$errors->first('pub_status'):''}}</small>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                        {{-- </form> --}}
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>

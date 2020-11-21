@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\Facades\Image as Image;
-
-use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -17,7 +16,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        //$categories = Category::all();
         $categories = Category::orderBy('id', 'desc')->get();
+
         return view('admin.pages.category.category-list', compact('categories'));
     }
 
@@ -31,10 +32,16 @@ class CategoryController extends Controller
         return view('admin.pages.category.category-create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     protected function categoryValidation($req)
     {
         $this->validate($req, [
-            'category_name' => 'required|max:20|min:2|regex:/^[\pL\s\-]/u',
+            'category_name' => 'required|max:50|min:2|regex:/^[\pL\s\-]/u',
             'calegory_des' => 'required',
             'cat_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'pub_status' => 'required'
@@ -43,6 +50,15 @@ class CategoryController extends Controller
 
     protected function categoryImgUpload($req)
     {
+        // $catgoryImg = $req->file('cat_img');
+        // $imgName = $catgoryImg->getClientOriginalName();
+        // //$imgDir = base_path() . '/public/uploads';
+        // $imgDir = public_path() . '/uploads';
+        // $imgUri = $imgDir . $imgName;
+        // $catgoryImg->move($imgDir, $imgName);
+
+        // return $imgUri;
+
         if ($req->hasFile('cat_img')) {
             $file = $req->cat_img;
             $catImg = $req->category_name.'-'.time().'.'.$file->getClientOriginalExtension();
@@ -59,22 +75,34 @@ class CategoryController extends Controller
         $category->category_name = $req->category_name;
         $category->calegory_des = $req->calegory_des;
         $category->pub_status = $req->pub_status;
+
         $category->cat_img = $catImg;
+
+        //return $imgUload;
 
         $category->save();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->categoryValidation($request);
+
         $catImg = $this->categoryImgUpload($request);
+
         $this->categoryDataSave($request, $catImg);
+
+        //dd($imgUload);
+        //return $request->all();
+
+
+
+        //Category::create($request->all());
+
+        // DB::table('categories')->insert([
+        //     'category_name' => $request->category_name,
+        //     'calegory_des' => $request->calegory_des,
+        //     'pub_status' => $request->pub_status,
+        // ]);
 
         return redirect('category/create')->with('message', 'Category Created');
     }
@@ -95,28 +123,31 @@ class CategoryController extends Controller
         $category->pub_status = 0;
         $category->save();
 
-        return redirect('category')->with('message', 'Category publish');
+        return redirect('category')->with('message', 'Category unpublish');
     }
 
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
+        $category = Category::find($id);
+
         return view('admin.pages.category.category-update', compact('category'));
     }
 
@@ -124,33 +155,39 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
         $this->categoryValidation($request);
-        $catImg = $this->categoryImgUpload($request);
 
+        //$this->categoryDataSave($request, $imgUrl);
+
+        $category = Category::find($id);
         $category->category_name = $request->category_name;
         $category->calegory_des = $request->calegory_des;
+        $catImg = $this->categoryImgUpload($request);
         $category->cat_img = $catImg;
         $category->pub_status = $request->pub_status;
+
         $category->save();
 
-        return redirect('/category')->with('message', 'Data updated');
+
+        return Redirect::to('category')->with('message', 'Data updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
+        $category = Category::find($id);
         $category->delete();
-        return redirect('/category')->with('message', 'Data Deleted');
+
+        return Redirect::to('category');
     }
 }

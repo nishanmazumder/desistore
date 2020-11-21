@@ -10,6 +10,9 @@
 
                 <div class="col-6">
                     <h6 class="m-0 font-weight-bold text-primary">All Caegory List</h6>
+                    @if (Session::get('message'))
+                    <p class="text-warning">{{Session::get('message')}}</p>
+                    @endif
                 </div>
                 <div class="col-6 text-right">
                     <a href="{{url('category/create')}}" class="btn btn-primary btn-icon-split">
@@ -55,7 +58,7 @@
                             <td>{{$i++}}</td>
                             <td>{{$category->category_name}}</td>
                             <td>{{$category->calegory_des}}</td>
-                            <td>image</td>
+                        <td class="text-center"><img src="{{asset('public/uploads')}}{{'/'.$category->cat_img}}" alt="" width="60px"></td>
                             <td>count</td>
                             <td>{{$category->pub_status == 0 ? 'Publish' : 'Unpublish'}}</td>
                             <td class="text-center">
