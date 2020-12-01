@@ -24,30 +24,30 @@
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <input type="text" name="category_name" class="form-control form-control-user"
-                                    id="catName" placeholder="Category Name" value="shirt">
+                                    id="" placeholder="Category Name" value="">
                                 <small
                                     class="text-danger">{{$errors->has('category_name')?$errors->first('category_name'):''}}</small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-12">
-                                <input type="text" value="category descrioption" name="calegory_des">
-                                {{-- <textarea class="form-control form-control-user" name="calegory_des" id="catDes"
-                                    rows="3" placeholder="Category Description"></textarea> --}}
+                                {{-- <input type="text" value="category descrioption" name="calegory_des"> --}}
+                                <textarea class="form-control form-control-user" name="calegory_des" id=""
+                                    rows="3" placeholder="Category Description"></textarea>
                                 <small
                                     class="text-danger">{{$errors->has('calegory_des')?$errors->first('calegory_des'):''}}</small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-12">
-                                <input type="file" class="form-control-file form-control-user" name="cat_img" id="catImg">
+                                <input type="file" class="form-control-file form-control-user" name="cat_img" id="">
                                 <small
                                     class="text-danger">{{$errors->has('cat_img')?$errors->first('cat_img'):''}}</small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-12">
-                                <select name="pub_status" class="form-control form-control-user" id="pubStatus">
+                                <select name="pub_status" class="form-control form-control-user" id="">
                                     <option value="0">Publish</option>
                                     <option value="1">Unpublish</option>
                                 </select>

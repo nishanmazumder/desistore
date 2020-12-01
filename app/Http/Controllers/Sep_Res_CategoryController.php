@@ -162,8 +162,6 @@ class CategoryController extends Controller
     {
         $this->categoryValidation($request);
 
-        //$this->categoryDataSave($request, $imgUrl);
-
         $category = Category::find($id);
         $category->category_name = $request->category_name;
         $category->calegory_des = $request->calegory_des;

@@ -19,6 +19,7 @@ class CreateCategoriesTable extends Migration
             $table->string('calegory_des');
             $table->text('cat_img');
             $table->tinyInteger('pub_status');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

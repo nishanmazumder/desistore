@@ -58,7 +58,7 @@
                             <td>{{$i++}}</td>
                             <td>{{$category->category_name}}</td>
                             <td>{{$category->calegory_des}}</td>
-                        <td class="text-center"><img src="{{asset('public/uploads')}}{{'/'.$category->cat_img}}" alt="" width="60px"></td>
+                        <td class="text-center"><img src="{{asset('uploads')}}{{'/'.$category->cat_img}}" alt="" width="60px"></td>
                             <td>count</td>
                             <td>{{$category->pub_status == 0 ? 'Publish' : 'Unpublish'}}</td>
                             <td class="text-center">

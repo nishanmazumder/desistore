@@ -16,10 +16,6 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 10; $i++) {
-            DB::table('category')->insert([
-                'name' => Str::random(10)
-            ]);
-        }
+        \App\Models\Category::factory(10)->create();
     }
 }

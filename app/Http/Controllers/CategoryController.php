@@ -36,7 +36,7 @@ class CategoryController extends Controller
         $this->validate($req, [
             'category_name' => 'required|max:20|min:2|regex:/^[\pL\s\-]/u',
             'calegory_des' => 'required',
-            'cat_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'cat_img.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'pub_status' => 'required'
         ]);
     }
@@ -131,6 +131,7 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $this->categoryValidation($request);
+        unlink(public_path('/uploads/'.$category->cat_img));
         $catImg = $this->categoryImgUpload($request);
 
         $category->category_name = $request->category_name;
