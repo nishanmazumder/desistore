@@ -36,8 +36,11 @@ Route::get('register-user', [HomeController::class, 'register']);
 
 Route::get('/contact-us', [HomeController::class, 'contact'])->name('contact');
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function() {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+
+
+
+
+	Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
     //Product
     Route::resource('product', ProductController::class)->except(['show']);
@@ -54,4 +57,3 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::get('brand-unpublish/{id}', [BrandController::class, 'unpublish']);
     Route::get('brand-publish/{id}', [BrandController::class, 'publish']);
 
-});
